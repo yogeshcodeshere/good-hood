@@ -21,12 +21,12 @@ export function LoginPage({ onLogin }) {
   };
 
   return (
-    <div style={{
+    <div className="login-container" style={{
       display: 'flex', minHeight: '100vh',
-      position: 'relative', zIndex: 50, background: 'var(--bg-primary)'
+      position: 'relative', zIndex: 50, background: 'var(--bg-base)'
     }}>
       {/* Left side: Hero graphic & description */}
-      <div style={{
+      <div className="login-left" style={{
         flex: 1, 
         display: 'flex', 
         flexDirection: 'column',
@@ -69,7 +69,7 @@ export function LoginPage({ onLogin }) {
       </div>
 
       {/* Right side: Login form */}
-      <div style={{
+      <div className="login-right" style={{
         flex: 1, 
         display: 'flex', 
         flexDirection: 'column', 

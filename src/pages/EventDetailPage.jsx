@@ -69,17 +69,17 @@ export function EventDetailPage({ event, onBack, role }) {
           }}>
             {cfg.label}
           </span>
-          <div className="heading-font" style={{fontSize:36, fontWeight:700, color:'white', letterSpacing:'-1px', lineHeight:1.2, marginBottom:16}}>
+          <div className="heading-font ev-title" style={{fontSize:36, fontWeight:700, color:'white', letterSpacing:'-1px', lineHeight:1.2, marginBottom:16}}>
             {event.title}
           </div>
-          <div style={{display:'flex', gap:24, fontSize:15, color:'rgba(255,255,255,0.8)', fontWeight:500}}>
+          <div className="ev-meta" style={{display:'flex', gap:24, fontSize:15, color:'rgba(255,255,255,0.8)', fontWeight:500}}>
             <span>{event.date}, 2025 · {event.time}</span>
             <span style={{display:'flex', alignItems:'center', gap:6}}><IMap size={16}/> {event.loc}</span>
           </div>
         </div>
       </div>
 
-      <div style={{display:'grid', gridTemplateColumns:'2fr 1fr', gap:16}}>
+      <div className="event-grid" style={{display:'grid', gridTemplateColumns:'2fr 1fr', gap:16}}>
         <div>
           <Card title="Mission Brief">
             <p style={{fontSize:15, color:'var(--text-main)', lineHeight:1.8}}>{event.desc}</p>

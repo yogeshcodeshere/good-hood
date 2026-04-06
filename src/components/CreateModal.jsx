@@ -15,7 +15,7 @@ export function CreateModal({ onClose }) {
       position:'fixed', inset:0, zIndex:300, background:'rgba(0,0,0,0.6)', backdropFilter:'blur(12px)',
       display:'flex', alignItems:'center', justifyContent:'center', padding:24
     }}>
-      <motion.div onClick={e=>e.stopPropagation()} initial={{scale:0.95, opacity:0, y:20}} animate={{scale:1, opacity:1, y:0}} exit={{scale:0.95, opacity:0, y:20}} className="glass-panel" style={{
+      <motion.div onClick={e=>e.stopPropagation()} initial={{scale:0.95, opacity:0, y:20}} animate={{scale:1, opacity:1, y:0}} exit={{scale:0.95, opacity:0, y:20}} className="glass-panel create-modal" style={{
         borderRadius:24, width:'100%', maxWidth:520, maxHeight:'90vh', overflowY:'auto', padding:'32px 28px',
         border:'1px solid rgba(255,255,255,0.1)', boxShadow:'0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)'
       }}>

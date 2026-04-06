@@ -100,6 +100,33 @@ export const GlobalStyles = () => (
     @media (max-width: 768px) {
       .page-padding { padding: 20px 20px 40px; }
       .main-content, .main-content.collapsed { margin-left: 0 !important; padding-bottom: 90px; }
+      
+      /* Login Page Overrides */
+      .login-container { flex-direction: column !important; }
+      .login-left { padding: 40px 20px !important; align-items: center !important; text-align: center !important; }
+      .login-left p { text-align: center !important; font-size: 15px !important; }
+      .login-left .heading-font { font-size: 36px !important; }
+      .login-right { border-left: none !important; border-top: 1px solid rgba(255, 255, 255, 0.05) !important; padding: 40px 20px !important; }
+
+      /* Generic Layout Overrides */
+      .event-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+      .ev-title { font-size: 28px !important; }
+      .ev-meta { flex-direction: column !important; gap: 8px !important; }
+      
+      /* Profile Page Overrides */
+      .profile-hero { flex-direction: column !important; text-align: center !important; gap: 16px !important; padding: 32px 20px !important; }
+      .profile-hero > div:last-child { width: 100% !important; }
+      .profile-hero-name { justify-content: center !important; margin-bottom: 12px !important; }
+      .profile-hero-loc { justify-content: center !important; }
+      
+      /* Leaderboard Podium Overrides */
+      .podium-container { gap: 8px !important; }
+      .podium-item { width: 100px !important; }
+      .podium-item > div:first-child { transform: scale(0.85); margin-bottom: 4px !important; }
+      .podium-item .heading-font { font-size: 14px !important; }
+
+      /* Create Modal Mobile Fix */
+      .create-modal { padding: 20px !important; border-radius: 16px !important; }
     }
   `}</style>
 );

@@ -41,7 +41,7 @@ export function ProfilePage() {
         <div style={{position:'absolute', inset:0, background:'linear-gradient(135deg, rgba(15,23,42,0.9), rgba(5,5,16,0.9))', zIndex:0}}/>
         <div style={{position:'absolute', top:0, left:0, right:0, height:120, background:'linear-gradient(to right, #3B82F6, #8B5CF6, #EC4899)', opacity:0.15, zIndex:1, filter:'blur(20px)'}}/>
         
-        <div style={{position:'relative', zIndex:2, padding:'40px 32px', display:'flex', gap:32, alignItems:'center'}}>
+        <div className="profile-hero" style={{position:'relative', zIndex:2, padding:'40px 32px', display:'flex', gap:32, alignItems:'center'}}>
           <div style={{
             width:100, height:100, borderRadius:24, background:'linear-gradient(135deg, #3B82F6, #06B6D4)', 
             display:'flex', alignItems:'center', justifyContent:'center', fontSize:36, fontWeight:700, color:'white',
@@ -52,13 +52,13 @@ export function ProfilePage() {
           </div>
           
           <div style={{flex:1}}>
-            <div style={{display:'flex', alignItems:'center', gap:16, marginBottom:8}}>
+            <div className="profile-hero-name" style={{display:'flex', alignItems:'center', gap:16, marginBottom:8}}>
               <div className="heading-font" style={{fontSize:32, fontWeight:700, color:'white', letterSpacing:'-0.5px'}}>Arjun Shah</div>
               <div style={{background:'rgba(245,158,11,0.15)', color:'#F59E0B', padding:'4px 12px', borderRadius:100, fontSize:12, fontWeight:700, border:'1px solid rgba(245,158,11,0.3)', display:'flex', alignItems:'center', gap:4}}>
                 <IFire/> 12 Day Streak
               </div>
             </div>
-            <div style={{fontSize:15, color:'var(--text-sec)', display:'flex', alignItems:'center', gap:8, marginBottom:20}}>
+            <div className="profile-hero-loc" style={{fontSize:15, color:'var(--text-sec)', display:'flex', alignItems:'center', gap:8, marginBottom:20}}>
               <IMap size={14}/> Panvel, Maharashtra · Member since Jan 2025
             </div>
             
@@ -111,7 +111,7 @@ export function ProfilePage() {
         </motion.div>
       </div>
 
-      <div style={{display:'grid', gridTemplateColumns:'1.5fr 1fr', gap:24}}>
+      <div className="event-grid" style={{display:'grid', gridTemplateColumns:'1.5fr 1fr', gap:24}}>
         {/* Left Col - Activity & Heatmap */}
         <div>
           <div className="glass-panel" style={{padding:24, borderRadius:24, marginBottom:24}}>

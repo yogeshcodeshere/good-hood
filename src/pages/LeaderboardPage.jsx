@@ -48,7 +48,7 @@ export function LeaderboardPage() {
       </div>
 
       {/* Podium */}
-      <div style={{display:'flex', alignItems:'flex-end', justifyContent:'center', gap:16, marginBottom:48, paddingTop:20}}>
+      <div className="podium-container" style={{display:'flex', alignItems:'flex-end', justifyContent:'center', gap:16, marginBottom:48, paddingTop:20}}>
         {podiumOrder.map((u, i) => {
           if(!u) return null;
           const rank = LEADERBOARD.indexOf(u) + 1;
@@ -57,7 +57,7 @@ export function LeaderboardPage() {
           const heights = [160, 200, 140];
           
           return (
-            <motion.div key={u.id} initial={{y:50, opacity:0}} animate={{y:0, opacity:1}} transition={{delay: i*0.1+0.2, type:'spring'}} style={{
+            <motion.div key={u.id} className="podium-item" initial={{y:50, opacity:0}} animate={{y:0, opacity:1}} transition={{delay: i*0.1+0.2, type:'spring'}} style={{
               width:120, position:'relative', display:'flex', flexDirection:'column', alignItems:'center'
             }}>
               <div style={{marginBottom:16, position:'relative'}}>
