@@ -3,6 +3,7 @@ import { IArrow, IMap, ICal, IClock, ICheck, IStar, ISparkle } from '../componen
 import { SCRIBBLES } from '../components/Icons';
 import { CAT_CFG } from '../data/mockData';
 import { motion } from 'framer-motion';
+import { api } from '../api';
 
 function Card({ title, children }) {
   return (
@@ -15,10 +16,11 @@ function Card({ title, children }) {
   );
 }
 
-export function EventDetailPage({ event, onBack, role }) {
+export function EventDetailPage({ event, onBack, role, onRefresh }) {
   const [showModal, setShowModal] = useState(false);
   const [joined, setJoined] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const cfg = CAT_CFG[event.cat] || CAT_CFG.social;
 
   const handleJoin = () => {
@@ -40,6 +42,18 @@ export function EventDetailPage({ event, onBack, role }) {
     a.download = `participants_${event.id}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
+  };
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await api.deleteEvent(event.id);
+      if (onRefresh) onRefresh();
+      onBack();
+    } catch (e) {
+      console.error(e);
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -123,14 +137,25 @@ export function EventDetailPage({ event, onBack, role }) {
               </div>
               
               {role === 'admin' ? (
-                <button 
-                  onClick={handleDownloadCSV}
-                  style={{width:'100%', padding:'16px', background:'rgba(245,158,11,0.1)', color:'#F59E0B',
-                    border:'1px solid rgba(245,158,11,0.3)', borderRadius:12, fontSize:15, fontWeight:700, 
-                    cursor:'pointer', transition:'0.3s', marginBottom: 12
-                  }}>
-                  ↓ Download Participant List (CSV)
-                </button>
+                <>
+                  <button 
+                    onClick={handleDownloadCSV}
+                    style={{width:'100%', padding:'16px', background:'rgba(245,158,11,0.1)', color:'#F59E0B',
+                      border:'1px solid rgba(245,158,11,0.3)', borderRadius:12, fontSize:15, fontWeight:700, 
+                      cursor:'pointer', transition:'0.3s', marginBottom: 12
+                    }}>
+                    ↓ Download Participant List (CSV)
+                  </button>
+                  <button 
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    style={{width:'100%', padding:'16px', background:'rgba(239,68,68,0.1)', color:'#EF4444',
+                      border:'1px solid rgba(239,68,68,0.3)', borderRadius:12, fontSize:15, fontWeight:700, 
+                      cursor:'pointer', transition:'0.3s', marginBottom: 12, opacity: isDeleting ? 0.5 : 1
+                    }}>
+                    {isDeleting ? 'Deleting...' : '🗑 Delete Event'}
+                  </button>
+                </>
               ) : !joined ? (
                 <button onClick={()=>setShowModal(true)} className="join-btn" style={{
                   width:'100%', padding:'16px', background:cfg.color, color:'white', border:'none', borderRadius:12,

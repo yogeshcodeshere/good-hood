@@ -17,6 +17,14 @@ export const api = {
     return res.json();
   },
 
+  async deleteEvent(eventId) {
+    const res = await fetch(`${API_URL}/events/${eventId}`, {
+      method: 'DELETE',
+    });
+    if (!res.ok) throw new Error('Failed to delete event');
+    return res.json();
+  },
+
   async getLeaderboard() {
     const res = await fetch(`${API_URL}/leaderboard`);
     if (!res.ok) throw new Error('Failed to fetch leaderboard');

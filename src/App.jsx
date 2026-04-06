@@ -86,9 +86,9 @@ export default function App() {
 
         <div style={{ flex: 1, position: 'relative', zIndex: 10 }}>
           <AnimatePresence mode="wait">
-            {role === 'admin' && page === 'home' && <AdminDashboard key="adminHome" onEventClick={goToEvent} events={events} />}
+            {role === 'admin' && page === 'home' && <AdminDashboard key="adminHome" onEventClick={goToEvent} events={events} onCreateClick={() => setShowCreate(true)} />}
             {role === 'participant' && page === 'home' && <HomePage key="partHome" onEventClick={goToEvent} events={events} />}
-            {page === 'detail' && selectedEvent && <EventDetailPage key="detail" event={selectedEvent} onBack={goBack} role={role} />}
+            {page === 'detail' && selectedEvent && <EventDetailPage key="detail" event={selectedEvent} onBack={goBack} role={role} onRefresh={fetchEvents} />}
             {page === 'leaderboard' && role === 'participant' && <LeaderboardPage key="leaderboard" />}
             {page === 'profile' && role === 'participant' && <ProfilePage key="profile" />}
           </AnimatePresence>

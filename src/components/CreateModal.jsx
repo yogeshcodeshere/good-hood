@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { api } from '../api';
 
 export function CreateModal({ onClose, onCreated }) {
-  const [form, setForm] = useState({title:'',cat:'',desc:'',reqs:'',date:'',time:'',loc:''});
+  const [form, setForm] = useState({title:'',cat:'',desc:'',reqs:'',date:'',time:'',loc:'',total:''});
   const [done, setDone] = useState(false);
 
   const upd = (k, v) => setForm(f => ({...f, [k]:v}));
@@ -39,16 +39,19 @@ export function CreateModal({ onClose, onCreated }) {
               .f-input {
                 width:100%; padding:14px 16px; border:1px solid rgba(255,255,255,0.1); borderRadius:12px;
                 background:rgba(0,0,0,0.2); color:white; font-family:'Inter',sans-serif; font-size:14px;
-                outline:none; transition:all 0.3s;
+                outline:none; transition:all 0.3s; color-scheme: dark;
+              }
+              .f-input option {
+                background: #1E293B; color: white;
               }
               .f-input:focus { border-color:var(--primary); background:rgba(59,130,246,0.05); box-shadow:0 0 0 4px rgba(59,130,246,0.1); }
               .f-label { display:block; font-size:11px; font-weight:700; color:var(--text-sec); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
             `}</style>
 
-            {[{k:'title',label:'Mission Title',ph:"e.g. Sector 12 Cleanup"}, {k:'loc',label:'Coordinates',ph:"e.g. Panvel Lake"}].map(f=>(
+            {[{k:'title',label:'Mission Title',ph:"e.g. Sector 12 Cleanup"}, {k:'loc',label:'Coordinates',ph:"e.g. Panvel Lake"}, {k:'total',label:'Total Capacity (Participants)',ph:"e.g. 50"}].map(f=>(
               <div key={f.k} style={{marginBottom:20}}>
                 <label className="f-label">{f.label}</label>
-                <input className="f-input" placeholder={f.ph} value={form[f.k]} onChange={e=>upd(f.k,e.target.value)} />
+                <input className="f-input" type={f.k==='total'?'number':'text'} placeholder={f.ph} value={form[f.k]} onChange={e=>upd(f.k,e.target.value)} />
               </div>
             ))}
 

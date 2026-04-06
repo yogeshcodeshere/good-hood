@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { EventCard } from '../components/EventCard';
 
-export function AdminDashboard({ onEventClick, events = [] }) {
+export function AdminDashboard({ onEventClick, events = [], onCreateClick }) {
   const adminEvents = events.filter(e => e.adminOwned);
 
   return (
@@ -12,7 +12,7 @@ export function AdminDashboard({ onEventClick, events = [] }) {
           <div className="heading-font" style={{fontSize:32, fontWeight:700, color:'white', marginBottom:8}}>Admin Dashboard</div>
           <div style={{fontSize:15, color:'var(--text-sec)'}}>Manage your broadcasted missions and participants.</div>
         </div>
-        <button style={{
+        <button onClick={onCreateClick} style={{
           padding:'12px 24px', background:'var(--primary)', color:'white', border:'none', borderRadius:'12px',
           fontSize:14, fontWeight:600, cursor:'pointer', boxShadow:'0 0 15px rgba(59,130,246,0.3)'
         }}>

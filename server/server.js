@@ -29,9 +29,10 @@ app.get('/api/events', (req, res) => {
 app.post('/api/events', (req, res) => {
   const data = readData();
   const newEvent = {
-    ...req.body,
+    ...(req.body || {}),
     id: Date.now(),
     joined: 0,
+    total: parseInt(req.body.total) || 50,
     adminOwned: true
   };
   data.events.push(newEvent);
@@ -44,8 +45,16 @@ app.get('/api/leaderboard', (req, res) => {
   res.json(data.leaderboard);
 });
 
+app.delete('/api/events/:id', (req, res) => {
+  const data = readData();
+  const idToRemove = parseInt(req.params.id, 10);
+  data.events = data.events.filter(e => e.id !== idToRemove);
+  writeData(data);
+  res.status(200).json({ success: true });
+});
+
 app.post('/api/login', (req, res) => {
-  const { role } = req.body;
+  const { role } = req.body || {};
   if (role === 'admin' || role === 'participant') {
     res.json({ token: `mock-jwt-${role}`, role });
   } else {
