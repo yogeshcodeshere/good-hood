@@ -2,13 +2,24 @@ import { useState } from 'react';
 import { ISparkle } from '../components/Icons';
 import { CAT_CFG } from '../data/mockData';
 import { motion } from 'framer-motion';
+import { api } from '../api';
 
-export function CreateModal({ onClose }) {
+export function CreateModal({ onClose, onCreated }) {
   const [form, setForm] = useState({title:'',cat:'',desc:'',reqs:'',date:'',time:'',loc:''});
   const [done, setDone] = useState(false);
 
   const upd = (k, v) => setForm(f => ({...f, [k]:v}));
-  const submit = () => { if(!form.title||!form.cat) return; setDone(true); setTimeout(onClose,2200); };
+  const submit = async () => { 
+    if(!form.title||!form.cat) return; 
+    setDone(true);
+    try {
+      await api.createEvent(form);
+      setTimeout(onCreated || onClose, 2200); 
+    } catch(err) {
+      console.error(err);
+      onClose();
+    }
+  };
 
   return (
     <div onClick={onClose} style={{

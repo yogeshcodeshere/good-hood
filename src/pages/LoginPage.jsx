@@ -1,21 +1,22 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { api } from '../api';
 
 export function LoginPage({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const submitLogin = (role) => {
+  const submitLogin = async (requestedRole) => {
     if (!email || !password) {
       setError('Please enter your credentials to authenticate.');
       return;
     }
     
-    // Simple dummy validation
-    if (password.length > 3) {
-      onLogin(role);
-    } else {
+    try {
+      const data = await api.login(requestedRole);
+      onLogin(data.role);
+    } catch(err) {
       setError('Invalid credentials.');
     }
   };

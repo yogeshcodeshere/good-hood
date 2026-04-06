@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import { IStar, ICompass } from '../components/Icons';
-import { LEADERBOARD, CAT_CFG } from '../data/mockData';
+import { CAT_CFG } from '../data/mockData';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
+import { api } from '../api';
 
 export function LeaderboardPage() {
   const [filter, setFilter] = useState('all-time');
   const [expandedId, setExpandedId] = useState(null);
+  const [leaderboard, setLeaderboard] = useState([]);
 
-  const top3 = LEADERBOARD.slice(0, 3);
-  const rest = LEADERBOARD.slice(3, 12);
-  const podiumOrder = [top3[1], top3[0], top3[2]];
+  useEffect(() => {
+    api.getLeaderboard().then(setLeaderboard);
+  }, []);
+
+  const top3 = leaderboard.slice(0, 3);
+  const rest = leaderboard.slice(3, 12);
+  const podiumOrder = top3.length === 3 ? [top3[1], top3[0], top3[2]] : [];
 
   const tFilters = [
     {id:'weekly', label:'This Week'},
@@ -51,7 +58,7 @@ export function LeaderboardPage() {
       <div className="podium-container" style={{display:'flex', alignItems:'flex-end', justifyContent:'center', gap:16, marginBottom:48, paddingTop:20}}>
         {podiumOrder.map((u, i) => {
           if(!u) return null;
-          const rank = LEADERBOARD.indexOf(u) + 1;
+          const rank = leaderboard.indexOf(u) + 1;
           const glows = ['rgba(148,163,184,0.5)', 'rgba(251,191,36,0.6)', 'rgba(180,83,9,0.5)'];
           const colors = ['#94A3B8', '#FBBF24', '#B45309'];
           const heights = [160, 200, 140];

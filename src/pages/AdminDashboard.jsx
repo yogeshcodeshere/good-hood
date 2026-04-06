@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
-import { EVENTS } from '../data/mockData';
 import { EventCard } from '../components/EventCard';
 
-export function AdminDashboard({ onEventClick }) {
-  const adminEvents = EVENTS.filter(e => e.adminOwned);
+export function AdminDashboard({ onEventClick, events = [] }) {
+  const adminEvents = events.filter(e => e.adminOwned);
 
   return (
     <motion.div className="page-padding" initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GlobalStyles } from './components/GlobalStyles';
 import { Sidebar } from './components/Sidebar';
 import { TopBar } from './components/TopBar';
@@ -10,6 +10,7 @@ import { LoginPage } from './pages/LoginPage';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { CreateModal } from './components/CreateModal';
 import { AnimatePresence } from 'framer-motion';
+import { api } from './api';
 
 const PAGE_META = {
   home: { title: 'Explore', subtitle: 'Discover social signals in your sector' },
@@ -23,6 +24,22 @@ export default function App() {
   const [showCreate, setShowCreate] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [role, setRole] = useState(null);
+  const [events, setEvents] = useState([]);
+
+  const fetchEvents = async () => {
+    try {
+      const data = await api.getEvents();
+      setEvents(data);
+    } catch (e) {
+      console.error("Failed to fetch events", e);
+    }
+  };
+
+  useEffect(() => {
+    if (role) {
+      fetchEvents();
+    }
+  }, [role]);
 
   const goToEvent = (ev) => { setSelectedEvent(ev); setPage('detail'); };
   const goBack = () => { setSelectedEvent(null); setPage('home'); };
@@ -69,8 +86,8 @@ export default function App() {
 
         <div style={{ flex: 1, position: 'relative', zIndex: 10 }}>
           <AnimatePresence mode="wait">
-            {role === 'admin' && page === 'home' && <AdminDashboard key="adminHome" onEventClick={goToEvent} />}
-            {role === 'participant' && page === 'home' && <HomePage key="partHome" onEventClick={goToEvent} />}
+            {role === 'admin' && page === 'home' && <AdminDashboard key="adminHome" onEventClick={goToEvent} events={events} />}
+            {role === 'participant' && page === 'home' && <HomePage key="partHome" onEventClick={goToEvent} events={events} />}
             {page === 'detail' && selectedEvent && <EventDetailPage key="detail" event={selectedEvent} onBack={goBack} role={role} />}
             {page === 'leaderboard' && role === 'participant' && <LeaderboardPage key="leaderboard" />}
             {page === 'profile' && role === 'participant' && <ProfilePage key="profile" />}
@@ -79,7 +96,7 @@ export default function App() {
       </div>
 
       <AnimatePresence>
-        {showCreate && <CreateModal key="create" onClose={() => setShowCreate(false)} />}
+        {showCreate && <CreateModal key="create" onClose={() => setShowCreate(false)} onCreated={() => { setShowCreate(false); fetchEvents(); }} />}
       </AnimatePresence>
     </>
   );

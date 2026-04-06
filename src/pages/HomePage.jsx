@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { ISearch } from '../components/Icons';
-import { EVENTS, CATS, CAT_CFG } from '../data/mockData';
+import { CATS, CAT_CFG } from '../data/mockData';
 import { EventCard } from '../components/EventCard';
 import { motion } from 'framer-motion';
 
-export function HomePage({ onEventClick }) {
+export function HomePage({ onEventClick, events = [] }) {
   const [search, setSearch] = useState('');
   const [activeCat, setActiveCat] = useState('all');
 
-  const filtered = EVENTS.filter(e => {
+  const filtered = events.filter(e => {
     const mc = activeCat === 'all' || e.cat === activeCat;
     const ms = !search || e.title.toLowerCase().includes(search.toLowerCase()) || e.loc.toLowerCase().includes(search.toLowerCase());
     return mc && ms;
