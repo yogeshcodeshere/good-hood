@@ -9,6 +9,8 @@ const __dirname = path.dirname(__filename);
 const dataPath = path.join(__dirname, 'data.json');
 
 const app = express();
+
+// TEMP: allow all (change later)
 app.use(cors());
 app.use(express.json());
 
@@ -65,7 +67,9 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-const PORT = 5000;
+// ✅ FIXED PORT
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-  console.log(`Backend server running on http://localhost:${PORT}`);
+  console.log(`Backend server running on ${PORT}`);
 });
