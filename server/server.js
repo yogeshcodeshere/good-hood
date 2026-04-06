@@ -10,7 +10,6 @@ const dataPath = path.join(__dirname, 'data.json');
 
 const app = express();
 
-// TEMP: allow all (change later)
 app.use(cors());
 app.use(express.json());
 
@@ -23,6 +22,7 @@ const writeData = (data) => {
   fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 };
 
+// API ROUTES
 app.get('/api/events', (req, res) => {
   const data = readData();
   res.json(data.events);
@@ -67,9 +67,18 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-// ✅ FIXED PORT
+// SERVE FRONTEND
+const frontendPath = path.resolve(__dirname, "../dist");
+
+app.use(express.static(frontendPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
+
+// PORT
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Backend server running on ${PORT}`);
+  console.log(`Server running on ${PORT}`);
 });
