@@ -6,6 +6,8 @@ import { HomePage } from './pages/HomePage';
 import { EventDetailPage } from './pages/EventDetailPage';
 import { LeaderboardPage } from './pages/LeaderboardPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { LoginPage } from './pages/LoginPage';
+import { AdminDashboard } from './pages/AdminDashboard';
 import { CreateModal } from './components/CreateModal';
 import { AnimatePresence } from 'framer-motion';
 
@@ -20,6 +22,7 @@ export default function App() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showCreate, setShowCreate] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [role, setRole] = useState(null);
 
   const goToEvent = (ev) => { setSelectedEvent(ev); setPage('detail'); };
   const goBack = () => { setSelectedEvent(null); setPage('home'); };
@@ -34,10 +37,22 @@ export default function App() {
     ? { title: selectedEvent?.title, subtitle: `${selectedEvent.loc} · ${selectedEvent.date}` }
     : PAGE_META[page] || PAGE_META.home;
 
+  if (!role) {
+    return (
+      <>
+        <GlobalStyles />
+        <div className="bg-noise" />
+        <div className="bg-pattern" />
+        <LoginPage onLogin={(r) => { setRole(r); setPage('home'); }} />
+      </>
+    );
+  }
+
   return (
     <>
       <GlobalStyles />
       <div className="bg-noise" />
+      <div className="bg-pattern" />
 
       <Sidebar
         active={page === 'detail' ? 'home' : page}
@@ -45,17 +60,20 @@ export default function App() {
         onCreateClick={() => setShowCreate(true)}
         collapsed={collapsed}
         onToggle={() => setCollapsed(c => !c)}
+        role={role}
+        onLogout={() => { setRole(null); setPage('home'); }}
       />
 
       <div className={`main-content ${collapsed ? 'collapsed' : ''}`}>
-        <TopBar title={currentMeta.title} subtitle={currentMeta.subtitle} onSearchClick={handleSearchClick} />
+        <TopBar title={currentMeta.title} subtitle={currentMeta.subtitle} onSearchClick={handleSearchClick} role={role} />
 
         <div style={{ flex: 1, position: 'relative', zIndex: 10 }}>
           <AnimatePresence mode="wait">
-            {page === 'home' && <HomePage key="home" onEventClick={goToEvent} />}
-            {page === 'detail' && selectedEvent && <EventDetailPage key="detail" event={selectedEvent} onBack={goBack} />}
-            {page === 'leaderboard' && <LeaderboardPage key="leaderboard" />}
-            {page === 'profile' && <ProfilePage key="profile" />}
+            {role === 'admin' && page === 'home' && <AdminDashboard key="adminHome" onEventClick={goToEvent} />}
+            {role === 'participant' && page === 'home' && <HomePage key="partHome" onEventClick={goToEvent} />}
+            {page === 'detail' && selectedEvent && <EventDetailPage key="detail" event={selectedEvent} onBack={goBack} role={role} />}
+            {page === 'leaderboard' && role === 'participant' && <LeaderboardPage key="leaderboard" />}
+            {page === 'profile' && role === 'participant' && <ProfilePage key="profile" />}
           </AnimatePresence>
         </div>
       </div>

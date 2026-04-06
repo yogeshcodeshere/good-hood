@@ -6,6 +6,34 @@ import { motion } from 'framer-motion';
 export function ProfilePage() {
   const [hoverBadge, setHoverBadge] = useState(null);
 
+  const handleDownloadCert = (eventTitle) => {
+    const certWindow = window.open('', '_blank');
+    certWindow.document.write(`
+      <html>
+        <head>
+          <title>Certificate of Participation</title>
+          <style>
+            body { font-family: sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; background:#0f172a; color:white; }
+            .cert { border: 10px solid #3B82F6; padding: 60px; text-align: center; background: #1e293b; border-radius: 20px; box-shadow: 0 0 50px rgba(59,130,246,0.3); max-width:800px; }
+            h1 { font-size: 48px; color: #3B82F6; margin-bottom: 20px; }
+            p { font-size: 24px; margin-bottom: 10px; }
+            .name { font-size: 40px; font-weight: bold; color: #F59E0B; margin: 20px 0; }
+          </style>
+        </head>
+        <body>
+          <div class="cert">
+             <h1>GoodHood Certificate</h1>
+             <p>This is to certify that</p>
+             <div class="name">Arjun Shah</div>
+             <p>has actively completed <b>${eventTitle}</b> and contributed to the community.</p>
+          </div>
+          <script>window.print();</script>
+        </body>
+      </html>
+    `);
+    certWindow.document.close();
+  };
+
   return (
     <motion.div className="page-padding" style={{maxWidth:960}} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
       {/* Hero */}
@@ -116,9 +144,20 @@ export function ProfilePage() {
                   <div style={{width:40, height:40, borderRadius:12, background:`${item.color}22`, border:`1px solid ${item.color}55`, display:'flex', alignItems:'center', justifyContent:'center', color:item.color, zIndex:1, flexShrink:0}}>
                     {item.type==='event' ? <IStar size={16}/> : item.type==='badge' ? <ITrophy/> : <IHourglass/>}
                   </div>
-                  <div style={{paddingTop:2}}>
-                    <div style={{fontSize:14, color:'white', fontWeight:500, marginBottom:4}}>{item.title}</div>
-                    <div style={{fontSize:12, color:'var(--text-sec)'}}>{item.time}</div>
+                  <div style={{paddingTop:2, flex:1}}>
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start'}}>
+                      <div>
+                        <div style={{fontSize:14, color:'white', fontWeight:500, marginBottom:4}}>{item.title}</div>
+                        <div style={{fontSize:12, color:'var(--text-sec)'}}>{item.time}</div>
+                      </div>
+                      {item.type === 'event' && (
+                        <button onClick={() => handleDownloadCert(item.title)} style={{
+                          padding:'4px 10px', background:`${item.color}22`, color:item.color, border:`1px solid ${item.color}55`, borderRadius:6, fontSize:11, fontWeight:700, cursor:'pointer'
+                        }}>
+                          Get Certificate
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -136,11 +175,11 @@ export function ProfilePage() {
                 <circle cx="50" cy="50" r="40" fill="none" stroke="var(--primary)" strokeWidth="10" strokeDasharray="251" strokeDashoffset="100" style={{filter:'drop-shadow(0 0 8px rgba(59,130,246,0.6))'}} strokeLinecap="round"/>
               </svg>
               <div style={{position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
-                <div className="heading-font" style={{fontSize:24, fontWeight:700, color:'white'}}>3 / 5</div>
+                <div className="heading-font" style={{fontSize:24, fontWeight:700, color:'white', marginTop:35}}>3 / 5</div>
                 <div style={{fontSize:11, color:'var(--text-sec)', textTransform:'uppercase', letterSpacing:'1px'}}>Events</div>
               </div>
             </div>
-            <button style={{width:'100%', padding:'12px', background:'rgba(59,130,246,0.1)', color:'var(--primary)', border:'1px solid rgba(59,130,246,0.3)', borderRadius:12, fontSize:13, fontWeight:600, cursor:'pointer', transition:'all 0.2s'}}>Find Next Event</button>
+            <button style={{width:'100%', padding:'12px', background:'transparent', color:'var(--text-sec)', border:'1px solid var(--border)', borderRadius:12, fontSize:13, fontWeight:600, cursor:'pointer', transition:'all 0.2s'}}>Find Next Event</button>
           </div>
 
           <div className="glass-panel" style={{padding:24, borderRadius:24}}>

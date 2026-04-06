@@ -1,13 +1,19 @@
-import { IHome, ITrophy, IUser, IPlus, IStar, ICompass, IClose } from './Icons';
+import { IUsers, IMap, IStar, IBookmark, IHome, ILogOut, IPlus, ICompass, IClose } from './Icons';
 import { motion } from 'framer-motion';
 
-const NAV_ITEMS = [
-  { id: 'home', label: 'Explore', icon: <IHome /> },
-  { id: 'leaderboard', label: 'Leaderboard', icon: <ITrophy /> },
-  { id: 'profile', label: 'Profile', icon: <IUser /> },
-];
+export function Sidebar({ active, onNavigate, onCreateClick, collapsed, onToggle, role, onLogout }) {
+  const adminLinks = [
+    { id: 'home', icon: <IHome/>, label: 'My Broadcasts' }
+  ];
+  
+  const participantLinks = [
+    { id: 'home', icon: <IHome/>, label: 'Explore' },
+    { id: 'leaderboard', icon: <IUsers/>, label: 'Leaderboard' },
+    { id: 'profile', icon: <IStar/>, label: 'Profile' },
+  ];
 
-export function Sidebar({ active, onNavigate, onCreateClick, collapsed, onToggle }) {
+  const links = role === 'admin' ? adminLinks : participantLinks;
+
   return (
     <>
       <style>{`
@@ -151,7 +157,7 @@ export function Sidebar({ active, onNavigate, onCreateClick, collapsed, onToggle
           </div>
           
           <nav className="sb-nav">
-            {NAV_ITEMS.map(item => {
+            {links.map(item => {
               const isActive = active === item.id;
               return (
                 <button key={item.id} className={`sb-item ${isActive ? 'active' : ''}`}
@@ -169,12 +175,27 @@ export function Sidebar({ active, onNavigate, onCreateClick, collapsed, onToggle
           </nav>
 
           <div className="sb-bottom">
-            <div className="sb-user" title={collapsed ? 'Arjun Shah · Lvl 7' : ''} onClick={() => onNavigate('profile')}>
-              <div className="sb-user-av">AS</div>
-              <div className="sb-user-info">
-                <div className="sb-user-name">Arjun Shah</div>
-                <div className="xp-bar-bg"><div className="xp-bar-fill" /></div>
-                <div className="xp-text"><span>Lvl 7</span><span>980 XP</span></div>
+            <div className="sb-user" title={collapsed ? (role === 'admin' ? 'Admin Portal' : 'Arjun Shah · Lvl 7') : ''} onClick={() => { if(role === 'participant') onNavigate('profile')}}>
+              <div className="sb-user-av" style={{background: role==='admin' ? '#F59E0B' : undefined}}>
+                {role === 'admin' ? 'AD' : 'AS'}
+              </div>
+              <div className="sb-user-info" style={{display:'flex', alignItems:'center', justifyContent:'space-between', width:'100%'}}>
+                <div style={{flex:1, overflow:'hidden'}}>
+                  <div className="sb-user-name">{role === 'admin' ? 'Admin Portal' : 'Arjun Shah'}</div>
+                  {role === 'participant' ? (
+                    <>
+                      <div className="xp-bar-bg"><div className="xp-bar-fill" /></div>
+                      <div className="xp-text"><span>Lvl 7</span><span>980 XP</span></div>
+                    </>
+                  ) : (
+                    <div className="xp-text"><span>Organizer</span></div>
+                  )}
+                </div>
+                {!collapsed && (
+                  <button onClick={(e) => { e.stopPropagation(); onLogout(); }} style={{background:'transparent', border:'none', color:'var(--text-sec)', cursor:'pointer', padding:4}} title="Logout">
+                    <ILogOut size={16}/>
+                  </button>
+                )}
               </div>
             </div>
             

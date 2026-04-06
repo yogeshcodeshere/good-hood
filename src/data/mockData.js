@@ -7,12 +7,12 @@ export const CAT_CFG = {
 };
 
 export const EVENTS = [
-  { id: 1, cat: 'blood', title: 'City Blood Drive', desc: 'Help save lives by donating blood at Kharghar hospital\'s quarterly camp. Every drop counts.', loc: 'Kharghar, Navi Mumbai', date: 'Apr 5', time: '9 AM – 1 PM', joined: 48, total: 100, pts: 150, days: 7, organizer: 'NSS Cell, NMMC', reqs: ['Age 18–65', 'Weight > 50 kg', 'No recent illness', 'Carry photo ID'] },
-  { id: 2, cat: 'plantation', title: 'Green Panvel Drive', desc: 'Plant saplings along the Panvel highway and help restore our urban greenery.', loc: 'Panvel, Maharashtra', date: 'Apr 8', time: '7 AM – 11 AM', joined: 35, total: 60, pts: 100, days: 10, organizer: 'Panvel Nature Society', reqs: ['Comfortable clothing', 'Bring water bottle'] },
-  { id: 3, cat: 'cleanup', title: 'Belapur Beach Cleanup', desc: 'Community effort to clean our coastline and protect marine life from plastic waste and debris.', loc: 'Belapur Beach, CBD', date: 'Apr 12', time: '6 AM – 9 AM', joined: 72, total: 120, pts: 120, days: 14, organizer: 'Ocean Warriors NGO', reqs: ['Wear old clothes', 'Bring sunscreen'] },
-  { id: 4, cat: 'social', title: 'Clothes Donation Camp', desc: 'Donate unused clothes for underprivileged families in the region before the summer season.', loc: 'Sector 15, Kharghar', date: 'Apr 6', time: '10 AM – 5 PM', joined: 25, total: 50, pts: 80, days: 8, organizer: 'Helping Hands Trust', reqs: ['Washed clothing only', 'Label by size if possible'] },
-  { id: 5, cat: 'awareness', title: 'Cyber Safety Workshop', desc: 'Free workshop on internet safety, phishing awareness, and data protection for all ages.', loc: 'Community Hall, Ulwe', date: 'Apr 15', time: '4 PM – 6 PM', joined: 18, total: 80, pts: 60, days: 17, organizer: 'SafeNet India', reqs: ['Register online', 'Bring your smartphone'] },
-  { id: 6, cat: 'blood', title: 'World Blood Donor Day', desc: 'Special drive in honour of World Blood Donor Day. Multiple donation centres across Navi Mumbai.', loc: 'Multiple Centres, NM', date: 'Jun 14', time: '8 AM – 6 PM', joined: 90, total: 200, pts: 200, days: 77, organizer: 'Red Cross India', reqs: ['Valid ID required', 'Eat well before coming'] },
+  { id: 1, adminOwned: true, cat: 'blood', title: 'City Blood Drive', desc: 'Help save lives by donating blood at Kharghar hospital\'s quarterly camp. Every drop counts.', loc: 'Kharghar, Navi Mumbai', date: 'Apr 5', time: '9 AM – 1 PM', joined: 48, total: 100, pts: 150, days: 7, organizer: 'NSS Cell, NMMC', reqs: ['Age 18–65', 'Weight > 50 kg', 'No recent illness', 'Carry photo ID'] },
+  { id: 2, adminOwned: false, cat: 'plantation', title: 'Green Panvel Drive', desc: 'Plant saplings along the Panvel highway and help restore our urban greenery.', loc: 'Panvel, Maharashtra', date: 'Apr 8', time: '7 AM – 11 AM', joined: 35, total: 60, pts: 100, days: 10, organizer: 'Panvel Nature Society', reqs: ['Comfortable clothing', 'Bring water bottle'] },
+  { id: 3, adminOwned: true, cat: 'cleanup', title: 'Belapur Beach Cleanup', desc: 'Community effort to clean our coastline and protect marine life from plastic waste and debris.', loc: 'Belapur Beach, CBD', date: 'Apr 12', time: '6 AM – 9 AM', joined: 72, total: 120, pts: 120, days: 14, organizer: 'Ocean Warriors NGO', reqs: ['Wear old clothes', 'Bring sunscreen'] },
+  { id: 4, adminOwned: false, cat: 'social', title: 'Clothes Donation Camp', desc: 'Donate unused clothes for underprivileged families in the region before the summer season.', loc: 'Sector 15, Kharghar', date: 'Apr 6', time: '10 AM – 5 PM', joined: 25, total: 50, pts: 80, days: 8, organizer: 'Helping Hands Trust', reqs: ['Washed clothing only', 'Label by size if possible'] },
+  { id: 5, adminOwned: false, cat: 'awareness', title: 'Cyber Safety Workshop', desc: 'Free workshop on internet safety, phishing awareness, and data protection for all ages.', loc: 'Community Hall, Ulwe', date: 'Apr 15', time: '4 PM – 6 PM', joined: 18, total: 80, pts: 60, days: 17, organizer: 'SafeNet India', reqs: ['Register online', 'Bring your smartphone'] },
+  { id: 6, adminOwned: true, cat: 'blood', title: 'World Blood Donor Day', desc: 'Special drive in honour of World Blood Donor Day. Multiple donation centres across Navi Mumbai.', loc: 'Multiple Centres, NM', date: 'Jun 14', time: '8 AM – 6 PM', joined: 90, total: 200, pts: 200, days: 77, organizer: 'Red Cross India', reqs: ['Valid ID required', 'Eat well before coming'] },
 ];
 
 export const LEADERBOARD = [
@@ -40,11 +40,11 @@ export const BADGES = [
 ];
 
 export const ACTIVITY_TIMELINE = [
-  { id: 1, type: 'badge', title: 'Earned 10 Events Badge', time: '2 days ago', color: '#F59E0B' },
-  { id: 2, type: 'event', title: 'Joined Green Panvel Drive', time: '1 week ago', color: '#22C55E' },
-  { id: 3, type: 'post', title: 'Shared photos from Beach Cleanup', time: '2 weeks ago', color: '#06B6D4' },
-  { id: 4, type: 'event', title: 'Joined City Blood Drive', time: '3 weeks ago', color: '#EF4444' },
-  { id: 5, type: 'badge', title: 'Earned Life Saver Badge', time: '1 month ago', color: '#EF4444' }
+  { id: 101, type: 'event', eventId: 3, title: 'Completed Belapur Beach Cleanup', time: '1 week ago', color: '#06B6D4' },
+  { id: 102, type: 'badge', title: 'Earned Beach Cleaner Badge', time: '1 week ago', color: '#06B6D4' },
+  { id: 103, type: 'event', eventId: 2, title: 'Joined Green Panvel Drive', time: '2 weeks ago', color: '#22C55E' },
+  { id: 104, type: 'event', eventId: 1, title: 'Joined City Blood Drive', time: '1 month ago', color: '#EF4444' },
+  { id: 105, type: 'badge', title: 'Earned 10 Events Badge', time: '1 month ago', color: '#F59E0B' }
 ];
 
 export const HEATMAP_DATA = Array.from({ length: 84 }, () => Math.floor(Math.random() * 5));

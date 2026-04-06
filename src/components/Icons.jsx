@@ -20,41 +20,68 @@ export const ICompass = () => <svg width="20" height="20" viewBox="0 0 24 24" fi
 export const IClose = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
 export const IFire = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2c0 0-4.5 4.5-4.5 9.5a4.5 4.5 0 0 0 9 0C16.5 6.5 12 2 12 2z"/></svg>;
 export const IHourglass = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 2v20"/><path d="M20 2v20"/><path d="M6 2h12"/><path d="M6 22h12"/><path d="m14 18-2-2-2 2v4h4v-4z"/><path d="m14 6-2 2-2-2V2h4v4z"/></svg>;
+export const ILogOut = ({size=14}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>;
 
 export const ScribbleBlood = () => (
-  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%', opacity:0.35}}>
-    <path d="M10 110 Q 50 20 110 50 T 210 20" stroke="currentColor" strokeWidth="4" fill="none"/>
-    <path d="M40 130 Q 90 60 160 80 T 250 40" stroke="currentColor" strokeWidth="2" fill="none"/>
-    <circle cx="165" cy="45" r="24" stroke="currentColor" strokeWidth="3" fill="none"/>
+  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%', opacity:0.18}}>
+    {/* Syringe & Blood Drop */}
+    <g transform="translate(130, 60) rotate(45) scale(1.5)">
+      <rect x="-10" y="-30" width="20" height="60" rx="3" stroke="currentColor" strokeWidth="3" />
+      <path d="M-4 -30 V-40 M4 -30 V-40 M-15 -30 H15 M-10 30 H10" stroke="currentColor" strokeWidth="2" />
+      <rect x="-4" y="30" width="8" height="20" stroke="currentColor" strokeWidth="2" />
+      <line x1="0" y1="50" x2="0" y2="70" stroke="currentColor" strokeWidth="2" />
+    </g>
+    <path d="M60 90 C 60 70 80 50 80 50 C 80 50 100 70 100 90 A 20 20 0 0 1 60 90 Z" stroke="currentColor" strokeWidth="3" />
+    <path d="M20 50 C 20 40 30 30 30 30 C 30 30 40 40 40 50 A 10 10 0 0 1 20 50 Z" stroke="currentColor" strokeWidth="2" />
   </svg>
 );
 export const ScribblePlant = () => ( 
-  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.35}}>
-    <path d="M30 140 C 30 80 50 30 110 30 C 170 30 190 80 190 140" stroke="currentColor" strokeWidth="4" fill="none"/>
-    <path d="M110 140 C 60 100 130 50 110 30" stroke="currentColor" strokeWidth="3" fill="none"/>
-    <circle cx="80" cy="60" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
+  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.18}}>
+    {/* Tree & Leaves */}
+    <g transform="translate(150, 90) scale(1.6)">
+      <path d="M0 30 C 0 10 10 -10 0 -20 C -10 -10 0 10 0 30" stroke="currentColor" strokeWidth="3" fill="none"/>
+      <path d="M0 0 Q 15 -10 20 -25 Q 5 -15 0 -20" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <path d="M0 10 Q -15 0 -20 -15 Q -5 -5 0 -5" stroke="currentColor" strokeWidth="2" fill="none"/>
+    </g>
+    <path d="M60 40 C 40 40 20 60 40 80 C 60 100 100 60 80 40 Z" stroke="currentColor" strokeWidth="2" fill="none" />
+    <path d="M40 80 Q 70 60 80 40" stroke="currentColor" strokeWidth="2" fill="none" />
   </svg> 
 );
 export const ScribbleClean = () => ( 
-  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.35}}>
-    <path d="M-20 80 C 40 40 80 120 140 80 C 200 40 240 120 280 80" stroke="currentColor" strokeWidth="4" fill="none"/>
-    <path d="M-20 100 C 40 60 80 140 140 100 C 200 60 240 140 280 100" stroke="currentColor" strokeWidth="2" fill="none"/>
+  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.18}}>
+    {/* Trash Can & Sweep */}
+    <g transform="translate(140, 70) scale(1.4)">
+      <rect x="-20" y="-10" width="40" height="40" rx="4" stroke="currentColor" strokeWidth="3" />
+      <path d="M-25 -10 H25 M-10 -10 V-15 Q -10 -20 0 -20 Q 10 -20 10 -15 V-10" stroke="currentColor" strokeWidth="2" fill="none" />
+      <line x1="-10" y1="0" x2="-10" y2="20" stroke="currentColor" strokeWidth="2" />
+      <line x1="0" y1="0" x2="0" y2="20" stroke="currentColor" strokeWidth="2" />
+      <line x1="10" y1="0" x2="10" y2="20" stroke="currentColor" strokeWidth="2" />
+    </g>
+    <path d="M20 90 Q 60 50 100 80 T 180 50" stroke="currentColor" strokeWidth="3" strokeDasharray="8 8" fill="none" />
   </svg> 
 );
 export const ScribbleSocial = () => ( 
-  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.35}}>
-    <circle cx="60" cy="70" r="40" stroke="currentColor" strokeWidth="3" fill="none"/>
-    <circle cx="120" cy="70" r="50" stroke="currentColor" strokeWidth="4" fill="none"/>
-    <circle cx="180" cy="70" r="40" stroke="currentColor" strokeWidth="3" fill="none"/>
-    <path d="M60 70 L 180 70" stroke="currentColor" strokeWidth="2" fill="none"/>
+  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.18}}>
+    {/* Hands holding a Heart */}
+    <g transform="translate(140, 60) scale(1.5)">
+      <path d="M0 -15 C -15 -30 -30 -10 0 15 C 30 -10 15 -30 0 -15 Z" stroke="currentColor" strokeWidth="2" fill="none"/>
+      <path d="M-40 20 Q -20 30 0 15 Q 20 30 40 20" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M-20 40 Q 0 50 20 40" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round"/>
+    </g>
+    <circle cx="50" cy="40" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
+    <circle cx="80" cy="80" r="6" stroke="currentColor" strokeWidth="2" fill="none" />
   </svg> 
 );
 export const ScribbleAware = () => ( 
-  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.35}}>
-    <circle cx="110" cy="70" r="15" stroke="currentColor" strokeWidth="4" fill="none"/>
-    <circle cx="110" cy="70" r="35" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="8 8"/>
-    <circle cx="110" cy="70" r="55" stroke="currentColor" strokeWidth="3" fill="none"/>
-    <path d="M0 70 L 220 70" stroke="currentColor" strokeWidth="2" fill="none"/>
+  <svg viewBox="0 0 220 140" fill="none" style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.18}}>
+    {/* Megaphone / Loudspeaker */}
+    <g transform="translate(120, 65) scale(1.3)">
+      <path d="M-20 -15 L 20 -30 V 30 L -20 15 Z" stroke="currentColor" strokeWidth="3" fill="none" />
+      <path d="M-20 -15 V 15 C -30 15 -30 -15 -20 -15 Z" stroke="currentColor" strokeWidth="2" fill="none" />
+      <path d="M30 -20 A 25 25 0 0 1 30 20 M 40 -30 A 35 35 0 0 1 40 30" stroke="currentColor" strokeWidth="3" fill="none" />
+    </g>
+    <ellipse cx="40" cy="90" rx="20" ry="10" stroke="currentColor" strokeWidth="2" fill="none" />
+    <path d="M30 90 L 10 120" stroke="currentColor" strokeWidth="2" fill="none" />
   </svg> 
 );
 

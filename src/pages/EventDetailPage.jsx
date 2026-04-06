@@ -15,20 +15,35 @@ function Card({ title, children }) {
   );
 }
 
-export function EventDetailPage({ event, onBack }) {
+export function EventDetailPage({ event, onBack, role }) {
   const [showModal, setShowModal] = useState(false);
   const [joined, setJoined] = useState(false);
   const [success, setSuccess] = useState(false);
-  const cfg = CAT_CFG[event.cat];
-  const pct = Math.round((event.joined / event.total) * 100);
+  const cfg = CAT_CFG[event.cat] || CAT_CFG.social;
 
   const handleJoin = () => {
     setSuccess(true);
     setTimeout(() => { setShowModal(false); setSuccess(false); setJoined(true); }, 2200);
   };
 
+  const handleDownloadCSV = () => {
+    const csvRows = [
+      "Name,JoinDate,Status",
+      "Arjun Shah,2025-04-05 09:12,Joined",
+      "Priya Patel,2025-04-05 10:44,Joined",
+      "Rohan Kumar,2025-04-06 08:30,Pending"
+    ];
+    const blob = new Blob([csvRows.join("\n")], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `participants_${event.id}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
-    <motion.div className="page-padding" style={{maxWidth:800}} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.4 }}>
+    <motion.div className="page-padding" style={{maxWidth:1000}} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}>
       <button onClick={onBack} style={{
         display:'flex', alignItems:'center', gap:8, padding:'8px 0', marginBottom:20, 
         background:'none', border:'none', cursor:'pointer', fontFamily:"'Inter',sans-serif",
@@ -96,29 +111,43 @@ export function EventDetailPage({ event, onBack }) {
             </div>
           </Card>
 
-          <Card title="Status">
-            <div style={{display:'flex', justifyContent:'space-between', marginBottom:12}}>
-              <span style={{fontSize:15, fontWeight:600, color:'white'}}>{event.joined} / {event.total}</span>
-              <span style={{fontSize:13, color:cfg.color}}>{pct}%</span>
+          <div className="glass-panel" style={{borderRadius: 16, overflow:'hidden'}}>
+            <div style={{height:6, background:`linear-gradient(90deg, ${cfg.color}, transparent)`}}/>
+            <div style={{padding:24}}>
+              <div style={{display:'flex', justifyContent:'space-between', marginBottom:8}}>
+                <span style={{fontSize:15, color:'white', fontWeight:600}}>{event.joined} joining</span>
+                <span style={{color:cfg.color, fontWeight:700}}>{Math.round(event.joined/event.total*100)}% Full</span>
+              </div>
+              <div style={{height:8, background:'rgba(255,255,255,0.05)', borderRadius:4, overflow:'hidden', marginBottom:24}}>
+                <div style={{height:'100%', width:`${(event.joined/event.total)*100}%`, background:cfg.color, borderRadius:4, boxShadow:`0 0 10px ${cfg.color}`}}/>
+              </div>
+              
+              {role === 'admin' ? (
+                <button 
+                  onClick={handleDownloadCSV}
+                  style={{width:'100%', padding:'16px', background:'rgba(245,158,11,0.1)', color:'#F59E0B',
+                    border:'1px solid rgba(245,158,11,0.3)', borderRadius:12, fontSize:15, fontWeight:700, 
+                    cursor:'pointer', transition:'0.3s', marginBottom: 12
+                  }}>
+                  ↓ Download Participant List (CSV)
+                </button>
+              ) : !joined ? (
+                <button onClick={()=>setShowModal(true)} className="join-btn" style={{
+                  width:'100%', padding:'16px', background:cfg.color, color:'white', border:'none', borderRadius:12,
+                  fontSize:15, fontWeight:700, cursor:'pointer', position:'relative', overflow:'hidden',
+                  boxShadow:`0 0 20px ${cfg.color}66`
+                }}>
+                  Volunteer Now
+                </button>
+              ) : (
+                <button style={{width:'100%', padding:'16px', background:'var(--surface)', color:cfg.color, border:`1px solid ${cfg.color}55`, borderRadius:12, fontSize:15, fontWeight:700, cursor:'default'}}>✓ Confirmed</button>
+              )}
+              
+              <div style={{textAlign:'center', marginTop:16, fontSize:12, color:'var(--text-sec)'}}>
+                <IStar size={14}/> Earn +{event.pts} XP on completion
+              </div>
             </div>
-            <div style={{height:8, background:'var(--surface)', borderRadius:4, overflow:'hidden', marginBottom:12, border:'1px solid var(--border)'}}>
-              <div style={{height:'100%', borderRadius:4, background:cfg.color, width:`${pct}%`, boxShadow:`0 0 10px ${cfg.color}`}}/>
-            </div>
-          </Card>
-
-          {!joined ? (
-            <button onClick={()=>setShowModal(true)} style={{
-              width:'100%', padding:'18px', background:cfg.color, color:'white', border:'none', borderRadius:16,
-              fontFamily:"'General Sans',sans-serif", fontSize:16, fontWeight:600, cursor:'pointer',
-              boxShadow:`0 10px 24px ${cfg.color}66`, transition:'transform 0.2s', marginTop:8
-            }}
-             onMouseEnter={e=>e.currentTarget.style.transform='translateY(-2px)'} onMouseLeave={e=>e.currentTarget.style.transform='translateY(0)'}
-             onMouseDown={e=>e.currentTarget.style.transform='scale(0.97)'}>
-              Deploy & Join
-            </button>
-          ) : (
-            <button style={{width:'100%', padding:'18px', background:'var(--surface)', color:cfg.color, border:`1px solid ${cfg.color}55`, borderRadius:16, fontFamily:"'General Sans',sans-serif", fontSize:16, fontWeight:600, cursor:'default', marginTop:8}}>✓ Confirmed for Deployment</button>
-          )}
+          </div>
         </div>
       </div>
 

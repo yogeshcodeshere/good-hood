@@ -61,29 +61,29 @@ export function EventCard({ event, onClick, delay = 0 }) {
         
         .ecard::after {
           content: ""; position: absolute; inset: -1px; z-index: -1;
-          background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), ${cfg.color}55, transparent 40%);
+          background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), var(--card-color-55), transparent 40%);
           opacity: 0; transition: opacity 0.4s; border-radius: 21px;
         }
 
         .ecard:hover { 
-          box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px ${cfg.color}15; 
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--card-color-15); 
           border-color: rgba(255,255,255,0.15); z-index: 10;
         }
         .ecard:hover::before, .ecard:hover::after { opacity: 1; }
 
         .ec-banner {
           height: 120px; position: relative; overflow: hidden;
-          background: ${cfg.color}15;
+          background: var(--card-color-15);
           border-bottom: 1px solid var(--border);
         }
 
         .ec-tag {
           display: inline-flex; align-items: center; gap: 6px;
           padding: 4px 12px; border-radius: 100px;
-          background: rgba(0,0,0,0.4); color: ${cfg.color};
-          border: 1px solid ${cfg.color}40; backdrop-filter: blur(8px);
+          background: rgba(0,0,0,0.4); color: var(--card-color);
+          border: 1px solid var(--card-color-40); backdrop-filter: blur(8px);
           font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-          box-shadow: 0 0 10px ${cfg.color}20;
+          box-shadow: 0 0 10px var(--card-color-20);
         }
 
         .ec-time {
@@ -95,7 +95,7 @@ export function EventCard({ event, onClick, delay = 0 }) {
         .ec-body { padding: 16px 20px 20px; position: relative; z-index: 1; }
         
         .ec-title {
-          font- குடும்ப: 'General Sans', sans-serif; font-size: 18px; font-weight: 600;
+          font-family: 'General Sans', sans-serif; font-size: 18px; font-weight: 600;
           color: white; margin-bottom: 6px; line-height: 1.3;
         }
         
@@ -106,9 +106,9 @@ export function EventCard({ event, onClick, delay = 0 }) {
 
         .ec-prog-bg { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; position: relative; }
         .ec-prog-fill { 
-          height: 100%; border-radius: 3px; background: ${cfg.color};
+          height: 100%; border-radius: 3px; background: var(--card-color);
           width: ${pct}%; 
-          box-shadow: 0 0 10px ${cfg.color};
+          box-shadow: 0 0 10px var(--card-color);
         }
         .ec-prog-glow {
           position: absolute; top: 0; left: 0; height: 100%; width: ${pct}%;
@@ -137,14 +137,21 @@ export function EventCard({ event, onClick, delay = 0 }) {
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
           transform: translateX(-100%); transition: transform 0.5s;
         }
-        .ecard:hover .ec-btn { background: ${cfg.color}; border-color: ${cfg.color}; box-shadow: 0 0 15px ${cfg.color}40; }
+        .ecard:hover .ec-btn { background: var(--card-color); border-color: var(--card-color); box-shadow: 0 0 15px var(--card-color-40); }
         .ecard:hover .ec-btn::before { transform: translateX(100%); }
       `}</style>
       
       <div 
         ref={(el) => { cardRef.current = el; animateRef(el); }}
         className={`ecard ${isVisible ? 'visible' : ''}`}
-        style={{ transitionDelay: `${delay}ms` }}
+        style={{ 
+          transitionDelay: `${delay}ms`, 
+          "--card-color": cfg.color,
+          "--card-color-15": `${cfg.color}15`,
+          "--card-color-20": `${cfg.color}20`,
+          "--card-color-40": `${cfg.color}40`,
+          "--card-color-55": `${cfg.color}55`
+        }}
         onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
         onClick={onClick}
       >

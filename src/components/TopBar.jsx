@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IMap, ISearch, IBell } from './Icons';
 
-export function TopBar({ title, subtitle, onSearchClick }) {
+export function TopBar({ title, subtitle, onSearchClick, role, setRole }) {
   const [bellActive, setBellActive] = useState(false);
   const [searchActive, setSearchActive] = useState(false);
 
@@ -94,7 +94,7 @@ export function TopBar({ title, subtitle, onSearchClick }) {
           {subtitle && <span className="tb-subtitle">{subtitle}</span>}
         </div>
         
-        <div className="tb-right">
+        <div className="tb-right" style={{display:'flex', alignItems:'center', gap:'12px'}}>
           <div className="loc-chip"><div className="loc-dot"/><IMap size={14}/> Panvel</div>
           
           <button className={`tb-btn ${searchActive ? 'active-state' : ''}`} 
