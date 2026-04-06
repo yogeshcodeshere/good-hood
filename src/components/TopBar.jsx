@@ -4,6 +4,7 @@ import { IMap, ISearch, IBell } from './Icons';
 export function TopBar({ title, subtitle, onSearchClick, role, setRole }) {
   const [bellActive, setBellActive] = useState(false);
   const [searchActive, setSearchActive] = useState(false);
+  const [hasNewNotifs, setHasNewNotifs] = useState(true);
 
   return (
     <>
@@ -77,6 +78,21 @@ export function TopBar({ title, subtitle, onSearchClick, role, setRole }) {
           transform-origin: top right;
         }
 
+        .notif-item {
+          padding: 12px; background: var(--bg-base); border: 1px solid var(--border);
+          border-radius: 10px; line-height: 1.5; transition: all 0.2s; cursor: pointer;
+        }
+        .notif-item:hover { 
+          background: var(--surface-hover); transform: translateY(-1px); 
+          border-color: rgba(255,255,255,0.1); 
+        }
+        .notif-item.unread {
+          background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.3);
+        }
+        .notif-time { font-size: 11px; color: var(--text-sec); margin-bottom: 4px; }
+        .notif-text { font-size: 13px; color: var(--text-main); }
+        .notif-bold { color: var(--primary); font-weight: 600; }
+
         @keyframes pulseDot { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.5; transform:scale(0.8)} }
         @keyframes fadeUp { from { opacity:0; transform:translateY(10px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
 
@@ -104,15 +120,35 @@ export function TopBar({ title, subtitle, onSearchClick, role, setRole }) {
           
           <div style={{position:'relative'}}>
             <button className={`tb-btn ${bellActive ? 'active-state' : ''}`} 
-              onClick={() => setBellActive(!bellActive)} title="Notifications">
+              onClick={() => { setBellActive(!bellActive); if(!bellActive) setHasNewNotifs(false); }} title="Notifications">
               <IBell/>
-              <div className="notif-dot" />
+              {hasNewNotifs && <div className="notif-dot" />}
             </button>
             {bellActive && (
               <div className="notif-popup">
-                <div style={{fontSize:'14px', fontWeight:600, marginBottom:'12px', color:'white'}}>Notifications</div>
-                <div style={{fontSize:'13px', color:'var(--text-sec)', padding:'12px', background:'var(--surface)', border:'1px solid var(--border)', borderRadius:'10px', lineHeight:1.5}}>
-                  <span style={{color:'var(--primary)', fontWeight:600}}>Panvel Beach Cleanup</span> is almost full! Complete your registration.
+                <div style={{fontSize:'14px', fontWeight:600, marginBottom:'12px', color:'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                  <span>Notifications</span>
+                  {hasNewNotifs && <span style={{fontSize:'10px', background: 'var(--primary)', color: 'white', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold'}}>2 New</span>}
+                </div>
+                <div style={{display:'flex', flexDirection:'column', gap:'8px'}}>
+                  <div className={`notif-item ${hasNewNotifs ? 'unread' : ''}`}>
+                    <div className="notif-time">Just now</div>
+                    <div className="notif-text">
+                      <span className="notif-bold">Community Garden Setup</span> updated its event timing to 10:00 AM.
+                    </div>
+                  </div>
+                  <div className={`notif-item ${hasNewNotifs ? 'unread' : ''}`}>
+                    <div className="notif-time">2 hours ago</div>
+                    <div className="notif-text">
+                      <span className="notif-bold">Panvel Beach Cleanup</span> is almost full! Complete your registration.
+                    </div>
+                  </div>
+                  <div className="notif-item">
+                    <div className="notif-time">Yesterday</div>
+                    <div className="notif-text">
+                      Your registration for <span className="notif-bold">Food Drive</span> has been confirmed.
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
