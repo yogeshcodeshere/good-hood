@@ -12,12 +12,15 @@ export function TopBar({ title, subtitle, onSearchClick, role, setRole }) {
         .topbar-wrapper {
           position: sticky; top: 0; z-index: 100;
           padding: 24px 40px 16px;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .topbar-wrapper::before {
+          content: ""; position: absolute; inset: 0; z-index: -1;
           background: linear-gradient(to bottom, var(--bg-base) 20%, transparent 100%);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
           -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-          display: flex; align-items: center; justify-content: space-between;
         }
 
         .tb-left { display: flex; align-items: baseline; gap: 16px; }
