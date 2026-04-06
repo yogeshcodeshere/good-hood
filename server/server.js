@@ -55,7 +55,7 @@ app.delete('/api/events/:id', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   const { email, password, role } = req.body || {};
-  
+
   if (role === 'admin' && email === 'admin@goodhood.com' && password === 'admin') {
     res.json({ token: `mock-jwt-admin`, role: 'admin' });
   } else if (role === 'participant' && email === 'user@goodhood.com' && password === 'user') {
@@ -65,7 +65,7 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);
 });
