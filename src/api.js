@@ -31,11 +31,11 @@ export const api = {
     return res.json();
   },
 
-  async login(role) {
+  async login(email, password, role) {
     const res = await fetch(`${API_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ role }),
+      body: JSON.stringify({ email, password, role }),
     });
     if (!res.ok) throw new Error('Invalid credentials');
     return res.json();

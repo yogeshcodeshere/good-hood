@@ -14,10 +14,14 @@ export function LoginPage({ onLogin }) {
     }
     
     try {
-      const data = await api.login(requestedRole);
+      const data = await api.login(email, password, requestedRole);
       onLogin(data.role);
     } catch(err) {
-      setError('Invalid credentials.');
+      if (err.message === 'Failed to fetch' || err.message.includes('NetworkError')) {
+        setError('Cannot connect to backend. Is it running on port 3000?');
+      } else {
+        setError('Invalid credentials.');
+      }
     }
   };
 

@@ -54,9 +54,12 @@ app.delete('/api/events/:id', (req, res) => {
 });
 
 app.post('/api/login', (req, res) => {
-  const { role } = req.body || {};
-  if (role === 'admin' || role === 'participant') {
-    res.json({ token: `mock-jwt-${role}`, role });
+  const { email, password, role } = req.body || {};
+  
+  if (role === 'admin' && email === 'admin@goodhood.com' && password === 'admin') {
+    res.json({ token: `mock-jwt-admin`, role: 'admin' });
+  } else if (role === 'participant' && email === 'user@goodhood.com' && password === 'user') {
+    res.json({ token: `mock-jwt-participant`, role: 'participant' });
   } else {
     res.status(401).json({ error: 'Invalid credentials' });
   }
